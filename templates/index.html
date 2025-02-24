@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Pokémon Cards</title>
-  <style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Pokémon Cards</title>
+        <style>
     body {
       font-family: 'Arial', sans-serif;
       background: #272626;
       padding: 20px;
+      position: relative;
     }
     h1 {
-        color: #ffffff;
+      color: #ffffff;
     }
     /* Nav styling */
     .site-nav {
@@ -66,23 +67,22 @@
       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
       border-radius: 8px;
     }
-    /* When clicked, add the flipped class */
     .card-inner.flipped {
       transform: rotateY(180deg);
     }
     /* Front and back of card */
     .card-front,
     .card-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    backface-visibility: hidden;
-    background: #fff;
-    overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      backface-visibility: hidden;
+      background: #fff;
+      overflow: hidden;
     }
     /* Front of card design */
     .card-front {
@@ -126,7 +126,7 @@
     .card-info_stat {
       margin: 2px 0;
     }
-    /* Back of card design and functionality */
+    /* Back of card design */
     .card-back {
       transform: rotateY(180deg);
       background: url('/static/assets/back_of_pokemon_card.png') no-repeat center center;
@@ -145,62 +145,95 @@
       border-radius: 4px;
       font-size: 0.7em;
     }
+    /* Back to top button */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    #backToTop:hover {
+      background: #0056b3;
+    }
   </style>
-</head>
-<body>
-  <h1>Jacob Gaudet's Pokedex</h1>
-  
-  <!-- Clickable link to navigate to pokemon type -->
-  <nav class="site-nav">
-    <ul class="site-nav_list">
-      {% for type_name in categories.keys() %}
-      <li class="site-nav_item">
-        <a class="site-link" href="#{{ type_name }}">{{ type_name.title() }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-  </nav>
-  
-  <!-- Separate pokemon by type -->
-  {% for type_name, cards in categories.items() %}
-  <div class="pokemon-category" id="{{ type_name }}">
-    <h2 class="pokemon-category_title">{{ type_name.title() }} Type</h2>
-    {% for pokemon in cards %}
-    <div class="pokemon-card">
-      <div class="card-inner">
-        <!-- Front of card -->
-        <div class="card-front">
-          <div class="card-image">
-            <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
-          </div>
-          <div class="card-info">
-            <h3 class="card-info_title">{{ pokemon.name.title() }}</h3>
-            <p class="card-info_detail"><strong>ID:</strong> {{ pokemon.id }}</p>
-            <p class="card-info_detail"><strong>Abilities:</strong> {{ pokemon.abilities | join(', ') }}</p>
-            <p class="card-info_detail"><strong>Weight:</strong> {{ pokemon.weight }}</p>
-            <p class="card-info_detail"><strong>Height:</strong> {{ pokemon.height }}</p>
-            <p class="card-info_detail"><strong>Base XP:</strong> {{ pokemon.base_experience }}</p>
-            <h4 class="card-info_stats-title">Stats:</h4>
-            <ul class="card-info_stats-list">
-              {% for stat, value in pokemon.stats.items() %}
-              <li class="card-info_stat">{{ stat.title() }}: {{ value }}</li>
-              {% endfor %}
+    </head>
+    <body>
+        <h1>Jacob Gaudet's Pokedex</h1>
+
+        <!-- Navigation Section -->
+        <nav class="site-nav">
+            <ul class="site-nav_list">
+                {% for type_name in categories.keys() %}
+                <li class="site-nav_item">
+                    <a class="site-link" href="#{{ type_name }}">{{
+                        type_name.title() }}</a>
+                </li>
+                {% endfor %}
             </ul>
-          </div>
-          <div class="flip-indicator">Click to flip</div>
+        </nav>
+
+        <!-- Separate pokemon by type -->
+        {% for type_name, cards in categories.items() %}
+        <div class="pokemon-category" id="{{ type_name }}">
+            <h2 class="pokemon-category_title">{{ type_name.title() }} Type</h2>
+            {% for pokemon in cards %}
+            <div class="pokemon-card">
+                <div class="card-inner">
+                    <!-- Front of card -->
+                    <div class="card-front">
+                        <div class="card-image">
+                            <img src="{{ pokemon.image }}"
+                                alt="{{ pokemon.name }}">
+                        </div>
+                        <div class="card-info">
+                            <h3 class="card-info_title">{{ pokemon.name.title()
+                                }}</h3>
+                            <p class="card-info_detail"><strong>ID:</strong> {{
+                                pokemon.id }}</p>
+                            <p
+                                class="card-info_detail"><strong>Abilities:</strong>
+                                {{ pokemon.abilities | join(', ') }}</p>
+                            <p class="card-info_detail"><strong>Weight:</strong>
+                                {{ pokemon.weight }}</p>
+                            <p class="card-info_detail"><strong>Height:</strong>
+                                {{ pokemon.height }}</p>
+                            <p class="card-info_detail"><strong>Base
+                                    XP:</strong> {{ pokemon.base_experience
+                                }}</p>
+                            <h4 class="card-info_stats-title">Stats:</h4>
+                            <ul class="card-info_stats-list">
+                                {% for stat, value in pokemon.stats.items() %}
+                                <li class="card-info_stat">{{ stat.title() }}:
+                                    {{ value }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="flip-indicator">Click to flip</div>
+                    </div>
+                    <!-- Back of card -->
+                    <div class="card-back"></div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <!-- Back of card -->
-        <div class="card-back">
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-  {% endfor %}
-  
-  <!-- JavaScript for click-to-flip functionality -->
-  <script>
+        {% endfor %}
+
+        <!-- Back to top button -->
+        <button id="backToTop">Back to Top</button>
+
+        <!-- JavaScript for click-to-flip functionality and back to top button -->
+        <script>
     document.addEventListener("DOMContentLoaded", function() {
+      // Click-to-flip functionality
       const cards = document.querySelectorAll(".pokemon-card");
       cards.forEach(card => {
         card.addEventListener("click", function() {
@@ -208,7 +241,27 @@
           innerCard.classList.toggle("flipped");
         });
       });
+
+      // Get the backToTop id 
+      const backToTopButton = document.getElementById("backToTop");
+
+      // Show the back to top button when scrolling down 200px
+      window.addEventListener("scroll", function() {
+        if (window.scrollY > 200) {
+          backToTopButton.style.display = "block";
+        } else {
+          backToTopButton.style.display = "none";
+        }
+      });
+
+      // Scroll to top when clicking the back to top button
+      backToTopButton.addEventListener("click", function() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
     });
   </script>
-</body>
+    </body>
 </html>

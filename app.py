@@ -1,6 +1,7 @@
 import requests
 from flask import Flask, render_template
 
+
 def fetch_pokemon_list(limit=151):
     """
     Get a list of pokemon from pokeapi.
@@ -11,7 +12,8 @@ def fetch_pokemon_list(limit=151):
     response = requests.get(url)
     response.raise_for_status()  # raise error for bad response
     data = response.json()
-    return data['results']
+    return data["results"]
+
 
 def fetch_pokemon_details(url):
     """
@@ -23,6 +25,7 @@ def fetch_pokemon_details(url):
     response.raise_for_status()
     return response.json()
 
+
 def process_pokemon_data(details):
     """
     Grab and process the relevant data for our pokemon.
@@ -33,13 +36,16 @@ def process_pokemon_data(details):
         "id": details.get("id"),
         "name": details.get("name"),
         "image": details.get("sprites", {}).get("front_default"),
-        "types": [t['type']['name'] for t in details.get("types", [])],
-        "abilities": [a['ability']['name'] for a in details.get("abilities", [])],
-        "stats": {stat["stat"]["name"]: stat["base_stat"] for stat in details.get("stats", [])},
+        "types": [t["type"]["name"] for t in details.get("types", [])],
+        "abilities": [a["ability"]["name"] for a in details.get("abilities", [])],
+        "stats": {
+            stat["stat"]["name"]: stat["base_stat"] for stat in details.get("stats", [])
+        },
         "weight": details.get("weight"),
         "height": details.get("height"),
-        "base_experience": details.get("base_experience")
+        "base_experience": details.get("base_experience"),
     }
+
 
 def categorize_pokemon_cards(pokemon_cards):
     """
@@ -55,25 +61,28 @@ def categorize_pokemon_cards(pokemon_cards):
             categories[poke_type].append(card)
     return categories
 
+
 # initialize app
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def index():
     # fetch list of pokemon (limited to 151 for original 151 pokemon in first gen)
     pokemon_list = fetch_pokemon_list(limit=151)
     pokemon_cards = []
     # fetch details for each pokemon
     for pokemon in pokemon_list:
-        details = fetch_pokemon_details(pokemon['url'])
+        details = fetch_pokemon_details(pokemon["url"])
         card = process_pokemon_data(details)
         pokemon_cards.append(card)
-    
+
     # group pokemon based on type
     categories = categorize_pokemon_cards(pokemon_cards)
-    
+
     # send grouped data to html template
-    return render_template('index.html', categories=categories)
+    return render_template("index.html", categories=categories)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
