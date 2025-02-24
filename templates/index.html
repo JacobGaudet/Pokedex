@@ -55,6 +55,7 @@
       perspective: 1000px;
       display: inline-block;
       margin: 16px;
+      cursor: pointer;
     }
     .card-inner {
       position: relative;
@@ -65,20 +66,23 @@
       box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
       border-radius: 8px;
     }
-    .pokemon-card:hover .card-inner {
+    /* When clicked, add the flipped class */
+    .card-inner.flipped {
       transform: rotateY(180deg);
     }
     /* Front and back of card */
     .card-front,
     .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      backface-visibility: hidden;
-      background: #fff;
-      overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    backface-visibility: hidden;
+    background: #fff;
+    overflow: hidden;
     }
     /* Front of card design */
     .card-front {
@@ -86,6 +90,7 @@
       flex-direction: column;
       box-sizing: border-box;
       padding: 8px;
+      position: relative;
     }
     .card-image {
       height: 120px;
@@ -129,6 +134,17 @@
       background-origin: border-box;
       background-clip: border-box;
     }
+    /* Flip indicator styling */
+    .flip-indicator {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7em;
+    }
   </style>
 </head>
 <body>
@@ -145,14 +161,14 @@
     </ul>
   </nav>
   
-  <!-- Seperate pokemon by type -->
+  <!-- Separate pokemon by type -->
   {% for type_name, cards in categories.items() %}
   <div class="pokemon-category" id="{{ type_name }}">
     <h2 class="pokemon-category_title">{{ type_name.title() }} Type</h2>
     {% for pokemon in cards %}
     <div class="pokemon-card">
       <div class="card-inner">
-        <!-- Info for front of card -->
+        <!-- Front of card -->
         <div class="card-front">
           <div class="card-image">
             <img src="{{ pokemon.image }}" alt="{{ pokemon.name }}">
@@ -171,8 +187,9 @@
               {% endfor %}
             </ul>
           </div>
+          <div class="flip-indicator">Click to flip</div>
         </div>
-        <!-- Info for back of card (just the pokemon card backside png) -->
+        <!-- Back of card -->
         <div class="card-back">
         </div>
       </div>
@@ -180,5 +197,18 @@
     {% endfor %}
   </div>
   {% endfor %}
+  
+  <!-- JavaScript for click-to-flip functionality -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll(".pokemon-card");
+      cards.forEach(card => {
+        card.addEventListener("click", function() {
+          const innerCard = this.querySelector(".card-inner");
+          innerCard.classList.toggle("flipped");
+        });
+      });
+    });
+  </script>
 </body>
 </html>
