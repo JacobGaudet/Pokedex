@@ -2,7 +2,7 @@
 Gotta fetch 'em all!
 
 ## About
-This website is meant to emulate a Pokedex built with Python and Flask that fetches data from the [PokéAPI](https://pokeapi.co/) to display the original 151 Pokemon as cards and categorized by type. Each card features a clickable flip animation to reveal the classic Pokemon card backside in order to make the ui feel more like you're browsing cards and not just the Pokemons data. The site also includes a nav menu for quickly jumping between types and a "Back to top" button for easy browsing.
+This website is meant to emulate a Pokedex built with Python and Flask that fetches data from the [PokéAPI](https://pokeapi.co/) to display the original 151 Pokemon as cards categorized by type. Each card features a clickable flip animation to reveal the classic Pokemon card backside in order to make the ui feel more like you're browsing cards and not just the Pokemons data. The site also includes a nav menu for quickly jumping between types and a "Back to top" button for easy browsing. I utilized JavaScript in my HTML for the interactions like flipping the card on click and sending the user back to the top of the page.
 
 ## Features
 - **Pokemon Cards:** Each card displays a Pokemon's image, stats, abilities, id, weight, height, and base xp.
