@@ -13,17 +13,17 @@ This website is meant to emulate a Pokedex built with Python and Flask that fetc
 ## Running Locally
 To run this project on your local machine, follow these steps:
 
-1. **Clone the Repository:**
-    Clone through your IDE (I used vscode for this project) or in your terminal with this command:
-    `git clone <https://github.com/JacobGaudet/Pokedex.git>`
-    cd to the project folder (Pokedex) in your IDE/terminal
+1. **Clone the Repository:**  
+   Clone through your IDE (I used VSCode for this project) or in your terminal with this command:  
+   `git clone https://github.com/JacobGaudet/Pokedex.git`  
+   cd to the project folder (Pokedex) in your IDE/terminal
 
-2. **Install Dependencies:**
-    Make sure you have Flask and Requests installed with this command:
-    `pip install flask requests`
+2. **Install Dependencies:**  
+   Make sure you have Flask and Requests installed with this command:  
+   `pip install flask requests`
 
-3. **Run the project locally:**
-    In your terminal run this command:
-    `python app.py`
-    Open the local instance in your web browser if it doesnt automatically pop up:
-    http://127.0.0.1:5000
+3. **Run the project locally:**  
+   In your terminal run this command:  
+   `python app.py`  
+   Open the local instance in your web browser if it doesn't automatically pop up:  
+   http://127.0.0.1:5000
